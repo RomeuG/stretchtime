@@ -7,7 +7,7 @@ Tool to notify the user that it is time to stretch their arms and legs.
 Setting up a 600 seconds timer:
 
 ```sh
-./exercisetime 600
+./stretchtime 600
 ```
 
 # License
