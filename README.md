@@ -2,6 +2,8 @@
 
 Tool to notify the user that it is time to stretch their arms and legs.
 
+![image](https://user-images.githubusercontent.com/2325589/149625960-5661edc5-05d3-4544-a30b-d0fde272aa2a.png)
+
 # Usage
 
 Setting up a 600 seconds timer:
