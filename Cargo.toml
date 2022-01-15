@@ -1,0 +1,19 @@
+cargo-features = ["strip"]
+
+[package]
+name = "exercisetime"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tui =  { version = "0.16.0", features = ["crossterm"] }
+crossterm = "0.20.0"
+soloud = "1.0.0"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+strip = true
