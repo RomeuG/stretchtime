@@ -96,7 +96,7 @@ fn play_sound() {
     let handle = sl.play(&wav);
 
     // VOLUME BETWEEN 0.0 AND 1.0!!! DONT BLOW YOUR EARDRUMS!!
-    sl.set_volume(handle, 0.1f32);
+    sl.set_volume(handle, 0.2f32);
 
     while sl.voice_count() > 0 {}
 }
