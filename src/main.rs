@@ -28,6 +28,8 @@ struct App {
     reset: bool,
     auto_mode: bool,
     sound_played: bool,
+    soloud: soloud::Soloud,
+    wav: soloud::audio::Wav,
 }
 
 impl App {
@@ -38,12 +40,14 @@ impl App {
             reset: false,
             auto_mode: false,
             sound_played: false,
+            soloud: soloud::Soloud::default().unwrap(),
+            wav: soloud::audio::Wav::default(),
         }
     }
 
     fn on_tick(&mut self) {
         if self.countdown_seconds == 0 && !self.sound_played {
-            play_sound();
+            self.play_sound();
             self.sound_played = true;
         }
 
@@ -84,21 +88,28 @@ impl App {
     fn toggle_auto_mode(&mut self) {
         self.auto_mode = !self.auto_mode;
     }
+
+    fn play_sound(&mut self) {
+        let handle = self.soloud.play(&self.wav);
+        self.soloud.set_volume(handle, 0.2f32);
+
+        while self.soloud.voice_count() > 0 {}
+    }
 }
 
-fn play_sound() {
-    let mut sl = soloud::Soloud::default().unwrap();
-    let mut wav = soloud::audio::Wav::default();
+fn play_sound(sl: &soloud::Soloud) {
+    //     let mut sl = soloud::Soloud::default().unwrap();
+    //     let mut wav = soloud::audio::Wav::default();
 
-    let _ = wav
-        .load_mem(include_bytes!("../resources/chimes.wav"))
-        .unwrap();
-    let handle = sl.play(&wav);
+    //     let _ = wav
+    //         .load_mem(include_bytes!("../resources/chimes.wav"))
+    //         .unwrap();
+    // let handle = sl.play(&wav);
 
     // VOLUME BETWEEN 0.0 AND 1.0!!! DONT BLOW YOUR EARDRUMS!!
-    sl.set_volume(handle, 0.2f32);
+    // sl.set_volume(handle, 0.2f32);
 
-    while sl.voice_count() > 0 {}
+    // while sl.voice_count() > 0 {}
 }
 
 fn main() -> Result<()> {
@@ -124,7 +135,14 @@ fn main() -> Result<()> {
     let mut terminal = Terminal::new(backend).map_err(|_| Error::Terminal)?;
 
     // create app and run it
-    let app = App::new(time_seconds);
+    let mut app = App::new(time_seconds);
+
+    // load wav into memory
+    let _ = app
+        .wav
+        .load_mem(include_bytes!("../resources/chimes.wav"))
+        .unwrap();
+
     let res = run_app(&mut terminal, app);
 
     // restore terminal
