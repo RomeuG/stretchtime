@@ -97,21 +97,6 @@ impl App {
     }
 }
 
-fn play_sound(sl: &soloud::Soloud) {
-    //     let mut sl = soloud::Soloud::default().unwrap();
-    //     let mut wav = soloud::audio::Wav::default();
-
-    //     let _ = wav
-    //         .load_mem(include_bytes!("../resources/chimes.wav"))
-    //         .unwrap();
-    // let handle = sl.play(&wav);
-
-    // VOLUME BETWEEN 0.0 AND 1.0!!! DONT BLOW YOUR EARDRUMS!!
-    // sl.set_volume(handle, 0.2f32);
-
-    // while sl.voice_count() > 0 {}
-}
-
 fn main() -> Result<()> {
     let args: Vec<String> = std::env::args().collect();
 
@@ -157,7 +142,7 @@ fn main() -> Result<()> {
     terminal.show_cursor().map_err(|_| Error::Terminal)?;
 
     if let Err(err) = res {
-        println!("{:?}", err)
+        println!("{err:?}");
     }
 
     Ok(())
